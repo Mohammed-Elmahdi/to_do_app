@@ -67,6 +67,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         labelText: 'Description',
                         // labelStyle: Theme.of(context).textTheme.bodyText1,
                       ),
+                      // controller: ,
                       onChanged: (text) {
                         description = text;
                       },

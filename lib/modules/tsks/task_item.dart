@@ -16,18 +16,14 @@ class TaskItem extends StatefulWidget {
 }
 
 class _TaskItemState extends State<TaskItem> {
+  bool click=true;
   late NavigatorState _navigator;
 
   @override
   void didChangeDependencies() {
     _navigator = Navigator.of(context);
-    super.didChangeDependencies();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,22 +43,23 @@ class _TaskItemState extends State<TaskItem> {
               autoClose: true,
               spacing: 15,
               onPressed: (context) {
-                showLoading(context, 'Loading...');
+                // showLoading(context, 'Loading...');
                 showMessage(
                     context,
                     'Are you sure?',
                     'Yes',
-                    () {
+                   ( () {
                       deleteTask();
-                      _navigator.pop();
-                    },
+                      _navigator.pop(context);
+                    }),
                     NegActionName: 'Cancel',
                     NegActionCallBack: () {
-                      _navigator.pop();
-                      hideLoadingDialog(context);
+                      _navigator.pop(context);
                     },
 
+
                     );
+
               },
 
               foregroundColor: Colors.white,
@@ -76,7 +73,7 @@ class _TaskItemState extends State<TaskItem> {
              autoClose: true,
               spacing: 15,
               onPressed: (context){
-                BottomSheetAddTask();
+
               },
               backgroundColor: Color(0xFF21B7CA),
               foregroundColor: Colors.white,
@@ -110,7 +107,8 @@ class _TaskItemState extends State<TaskItem> {
                           .headline2!
                           .copyWith(fontSize: 19),
                     ),
-                    Text(widget.taskModel.description),
+                    Text(
+                        widget.taskModel.description),
                   ],
                 ),
               ),
@@ -120,8 +118,8 @@ class _TaskItemState extends State<TaskItem> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                child: Icon(
-                  Icons.check,
+                child: Icon((click==false)? Icons.check
+                :Icons.account_balance_wallet_sharp,
                   color: Colors.white,
                   size: 30,
                 ),
@@ -141,19 +139,5 @@ class _TaskItemState extends State<TaskItem> {
       hideLoadingDialog(context);
     });
   }
-  BottomSheetAddTask() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Container(
-          child: Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: EditTask(),
-          ),
-        );
-      },
-      isScrollControlled: true,
-    );
-  }
+
 }
