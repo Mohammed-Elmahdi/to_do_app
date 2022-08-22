@@ -17,6 +17,7 @@ class TaskItem extends StatefulWidget {
 
 class _TaskItemState extends State<TaskItem> {
   bool click=true;
+
   late NavigatorState _navigator;
 
   @override
@@ -72,8 +73,9 @@ class _TaskItemState extends State<TaskItem> {
               borderRadius: BorderRadius.only(bottomRight: Radius.circular(10),topRight: Radius.circular(10)),
              autoClose: true,
               spacing: 15,
-              onPressed: (context){
-
+              onPressed:(context){
+                Navigator.pushNamed(context, EditTask.routeName,
+                arguments: widget.taskModel);
               },
               backgroundColor: Color(0xFF21B7CA),
               foregroundColor: Colors.white,
