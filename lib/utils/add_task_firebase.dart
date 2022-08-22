@@ -48,3 +48,11 @@ Stream<QuerySnapshot<TaskModel>> getTaskFromFirebaseUsingStream(
 Future<void> deleteTaskFromFireStore(TaskModel task) {
   return getTaskFromFireStore().doc(task.id).delete();
 }
+
+// Fonction Update Data
+
+Future<void> updateTasksFromFirestore(TaskModel task){
+  final docTask = getTaskFromFireStore().doc(task.id);
+
+  return docTask.update(task.toJson());
+}
