@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_new/shared/styles/my_theme.dart';
 
 class MyProvider extends ChangeNotifier{
   String AppLanguage='en';
@@ -12,5 +13,12 @@ class MyProvider extends ChangeNotifier{
   void changeTheme(ThemeMode theme){
     themeMode=theme;
     notifyListeners();
+  }
+  Color getBackground() {
+    if (themeMode == ThemeMode.light) {
+      return MyThemeData.OnprimaryColor;
+    } else {
+      return MyThemeData.primaryColorDark;
+    }
   }
 }

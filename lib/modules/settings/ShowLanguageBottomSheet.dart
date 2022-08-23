@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_new/shared/styles/my_theme.dart';
+import 'package:provider/provider.dart';
+
+import 'MyProvider.dart';
+
 
 class ShowLanguageBottomSheet extends StatefulWidget {
   @override
@@ -10,12 +14,13 @@ class ShowLanguageBottomSheet extends StatefulWidget {
 class _ShowLanguageBottomSheetState extends State<ShowLanguageBottomSheet> {
   @override
   Widget build(BuildContext context) {
-    // var pro=Provider.of<MyProvider>(context);
+    var provider=Provider.of<MyProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(
         children: [
-          InkWell(onTap: () {}, child: ShowLanguageSelected('English', true)),
+          InkWell(onTap: () {},
+              child: ShowLanguageSelected('English', true)),
           SizedBox(
             height: 10,
           ),
@@ -27,19 +32,10 @@ class _ShowLanguageBottomSheetState extends State<ShowLanguageBottomSheet> {
 
   Widget ShowLanguageSelected(String text, bool selected) {
     if (selected) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text('$text',
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    color: MyThemeData.primaryColor,
-                  )),
-          Icon(
-            Icons.check,
-            color: Theme.of(context).primaryColor,
-          ),
-        ],
-      );
+      return Text('$text',
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                color: MyThemeData.primaryColor,
+              ));
     } else {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

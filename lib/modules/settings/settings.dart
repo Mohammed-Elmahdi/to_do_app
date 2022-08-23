@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_new/shared/styles/my_theme.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'ShowLanguageBottomSheet.dart';
 
 class Settings extends StatefulWidget {
@@ -18,9 +18,15 @@ class _SettingsState extends State<Settings> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Language',
-            style: Theme.of(context).textTheme.subtitle1,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Language'
+                // AppLocalizations.of(context)!.language,
+                // style: Theme.of(context).textTheme.subtitle2,
+              ),
+              Icon(Icons.arrow_downward),
+            ],
           ),
           // SizedBox(height: 10),
           InkWell(

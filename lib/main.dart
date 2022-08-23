@@ -4,15 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:to_do_new/LayOut/home_layout.dart';
+import 'package:to_do_new/modules/settings/MyProvider.dart';
 import 'package:to_do_new/modules/tsks/edit_task.dart';
+import 'package:to_do_new/providers/providerTasks.dart';
 import 'package:to_do_new/shared/styles/my_theme.dart';
-// import 'firebase_options.dart';
+import 'package:provider/provider.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //firebase
   await Firebase.initializeApp();
   // FirebaseFirestore.instance.disableNetwork(); //to make data local
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider( create:(_)=>TasksProvider()),
+      ChangeNotifierProvider( create:(_)=>MyProvider())
+    ],
+
+
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,6 +39,7 @@ class MyApp extends StatelessWidget {
         Locale('en'), // English, no country code
         Locale('ar'), // Spanish, no country code
       ],
+      locale: Locale('en'),
       debugShowCheckedModeBanner: false,
       initialRoute: HomeLayout.routeName,
       routes: {

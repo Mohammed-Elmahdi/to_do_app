@@ -8,7 +8,8 @@ import 'package:to_do_new/models/task_model.dart';
 // FirebaseFirestore.instance;
 //1-Function to create collection
 CollectionReference<TaskModel> getTaskFromFireStore() {
-  return FirebaseFirestore.instance.collection('task').withConverter<TaskModel>(
+  return FirebaseFirestore.instance.collection('task')
+      .withConverter<TaskModel>(
       fromFirestore: (snapshot, op) {
         //return model
         return TaskModel.fromJson(snapshot.data()!);

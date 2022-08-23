@@ -11,7 +11,7 @@ class EditTask extends StatefulWidget {
 }
 
 class _EditTask extends State<EditTask> {
-  var editData;
+  late TaskModel editData;
   var selectedDate = DateTime.now();
   var formKey = GlobalKey<FormState>(); //textFormField
   TextEditingController title=TextEditingController();
@@ -20,13 +20,12 @@ class _EditTask extends State<EditTask> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     //get data from navigator
     editData = ModalRoute.of(context)!.settings.arguments as TaskModel;
-    // selectedDate=DateTime.fromMillisecondsSinceEpoch(editData.dateTime);
+    // selectedDate=DateTime.fromMicrosecondsSinceEpoch(editData.dateTime);
     title.text=editData.title;
     description.text=editData.description;
-    
+
 
     return Stack(
       children:[
@@ -50,12 +49,11 @@ class _EditTask extends State<EditTask> {
         Expanded(
           flex: 8,
           child: Card(
-            elevation: 10,
             color: MyThemeData.WhiteColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-             margin: const EdgeInsets.only(top: 100,bottom: 30, left: 25, right: 25),
+             margin: const EdgeInsets.only(top: 100,bottom: 40, left: 30, right: 25),
 
 
             child: Container(
@@ -143,45 +141,42 @@ class _EditTask extends State<EditTask> {
                     ),
                   ), //date
                   Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25,right: 25),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          showLoading(context, 'Loading...');
+                  ElevatedButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        showLoading(context, 'Loading...');
 
-                          updateTasksFromFirestore(editData).then((value) {
-                            hideLoadingDialog(context);
+                        updateTasksFromFirestore(editData).then((value) {
+                          hideLoadingDialog(context);
 
-                            showMessage(context, 'Edited Successfully', 'Ok', () {
-                              Navigator.popUntil(
-                                context,
-                                    (route) => route.isFirst,
-                              );
-                              //to close any sheet at the top of base screen
-                              // Navigator.pop(context);
-                            });
-                            // Navigator.pop(context);//close bottom sheet
-                          }).catchError((e) {
-                            hideLoadingDialog(context);
+                          showMessage(context, 'Edited Successfully', 'Ok', () {
+                            Navigator.popUntil(
+                              context,
+                                  (route) => route.isFirst,
+                            );
+                            //to close any sheet at the top of base screen
+                            // Navigator.pop(context);
                           });
-                        }
-                      },
-                      child: Text('Save Change',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(70, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                      ),
-
+                          // Navigator.pop(context);//close bottom sheet
+                        }).catchError((e) {
+                          hideLoadingDialog(context);
+                        });
+                      }
+                    },
+                    child: Text('Save Change',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
                     ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(70, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+
                   ),
                 ],
               ),
@@ -204,6 +199,7 @@ class _EditTask extends State<EditTask> {
         lastDate: DateTime.now().add(Duration(days: 365)));
     if (choosenDate != null) {
       selectedDate = choosenDate;
+      editData.dateTime=choosenDate.microsecondsSinceEpoch;
       setState(() {});
     }
   }

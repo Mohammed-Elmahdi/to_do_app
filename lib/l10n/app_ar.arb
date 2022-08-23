@@ -1,5 +1,27 @@
 {
-    "todoTitle": "مهامي",
-    "tasks":"المهام"
+    "todoTitle": "قائمة المهام",
+    "tasks":"المهام",
+    "done": "تم!",
+    "delete":"حذف",
+    "add": "إضافة مهمة جديدة",
+    "title": "العنوان",
+    "description": "الوصف",
+    "selectDate": "إختر التاريخ",
+    "addTaskButton": "إضافة المهمة",
+    "editTask": "تعديل المهمة",
+    "saveChangesButton": "حفظ التغيرات",
+    "language": "اللغة",
+    "english": "الإنجليزية",
+    "arabic": "العربية",
+    "mode": "الوضع",
+    "light": "فاتح",
+    "dark": "ليلي",
+    "yes": "نعم",
+    "ok": "تم",
+    "cancel": "إلغاء",
+    "loading": "انتظار...",
+    "setting": "الإعدادات",
+    "addedSuccessfully": "تمت الإضافة بنجاح",
+    "editedSuccessfully": "تمت التعديل بنجاح"
 
 }

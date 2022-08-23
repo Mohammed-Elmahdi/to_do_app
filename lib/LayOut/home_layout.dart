@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:to_do_new/modules/bottomSheet/add_task_bottom_sheet.dart';
 import 'package:to_do_new/modules/settings/settings.dart';
 import 'package:to_do_new/modules/tsks/tasks_tap.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeLayout extends StatefulWidget {
   static const String routeName = 'home';
@@ -19,7 +21,7 @@ class _HomeLayoutState extends State<HomeLayout> {
       // resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(
-          'To Do',
+          AppLocalizations.of(context)!.todoTitle,
           style: Theme.of(context).textTheme.headline1,
         ),
         centerTitle: true,
