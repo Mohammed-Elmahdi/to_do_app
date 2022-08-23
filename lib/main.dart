@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:to_do_new/LayOut/home_layout.dart';
+import 'package:to_do_new/modules/tsks/edit_task.dart';
 import 'package:to_do_new/shared/styles/my_theme.dart';
 // import 'firebase_options.dart';
 
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       initialRoute: HomeLayout.routeName,
       routes: {
         HomeLayout.routeName: (c) => HomeLayout(),
+        EditTask.routeName:(co)=>EditTask(),
       },
       theme: MyThemeData.lightTheme,
       themeMode: ThemeMode.light,
