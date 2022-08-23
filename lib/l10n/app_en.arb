@@ -1,5 +1,27 @@
 {
-    "todoTitle": "ToDO App",
-    "tasks":"Tasks"
+    "todoTitle": "To DO List",
+    "tasks":"Tasks",
+    "done": "Done!",
+    "delete":"Delete",
+    "add": "Add New Task",
+    "title": "Title",
+    "description": "Description",
+    "selectDate": "Select Date",
+    "addTaskButton": "Add Task",
+    "editTask": "Edit Task",
+    "saveChangesButton": "Save Changes",
+    "language": "Language",
+    "english": "English",
+    "arabic": "Arabic",
+    "mode": "Mode",
+    "light": "Light",
+    "dark": "Dark",
+    "yes": "Yes",
+    "ok": "Ok",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "setting": "Setting",
+    "addedSuccessfully": "Added Successfully",
+    "editedSuccessfully": "Edited Successfully"
 
 }

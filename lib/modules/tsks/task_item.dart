@@ -31,7 +31,7 @@ class _TaskItemState extends State<TaskItem> {
     return Padding(
       padding:  EdgeInsets.only(top: 10,bottom: 5,),
       child: Container(
-        height: size.height * .13,
+        height: size.height * .15,
         margin: EdgeInsets.all(12),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(12)),
@@ -71,7 +71,7 @@ class _TaskItemState extends State<TaskItem> {
               ),
 
               SlidableAction(
-                borderRadius: BorderRadius.only(bottomRight: Radius.circular(10),topRight: Radius.circular(10)),
+                // borderRadius: BorderRadius.only(bottomRight: Radius.circular(10),topRight: Radius.circular(10)),
                autoClose: true,
                 spacing: 15,
                 onPressed:(context){
@@ -91,9 +91,10 @@ class _TaskItemState extends State<TaskItem> {
             children: [
               Container(
                 margin: EdgeInsets.all(8),
-                height: size.height*.12,
-                width: 3,
-                color: primaryColor,
+                height: size.height*.17,
+                width: 5,
+                color: widget.taskModel.isDone==false ?primaryColor:
+                   Colors.green,
               ), //line
               Expanded(
                 child: Column(
@@ -121,23 +122,27 @@ class _TaskItemState extends State<TaskItem> {
                 onTap: (){
                   widget.taskModel.isDone=!widget.taskModel.isDone;
                   updateTasksFromFirestore(widget.taskModel);
-                  setState(() {});
+                  // setState(() {});
                 },
                 child: widget.taskModel.isDone==false?
                    Container(
-                  margin: EdgeInsets.all(8),
+                  margin: EdgeInsets.all(18),
                        decoration: BoxDecoration(
                        color: primaryColor,
                       borderRadius: BorderRadius.circular(12),
                          ),
-                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                     child: Icon(Icons.check))//Icon
+                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                     child: Icon(Icons.check,color: Colors.white,))//Icon
                     :
-                      Text('Done!',
+                      Padding(
+                        padding: const EdgeInsets.only(right: 18),
+                        child: Text('Done!',
                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   color: Colors.green,
+
                  ),
-                 )//DONE!
+                 ),
+                      )//DONE!
               ),
             ],
           ),
