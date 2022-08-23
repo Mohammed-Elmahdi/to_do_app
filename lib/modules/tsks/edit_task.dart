@@ -28,166 +28,166 @@ class _EditTask extends State<EditTask> {
     
 
     return Stack(
-      children: [
+      children:[
         Scaffold(
-          appBar: AppBar(
-            title:  Text(
-              'Edit Task',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1
-                  ?.copyWith(color: Colors.white),
-              textAlign: TextAlign.center,
+        appBar: AppBar(
+          elevation: 5,
+          title:  Text(
+            'TO DO',
+            style: Theme.of(context)
+                .textTheme
+                .headline1
+                ?.copyWith(color: Colors.white,
+            fontSize: 27
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+      Column(
+      children: [
+        Expanded(
+          flex: 8,
+          child: Card(
+            color: MyThemeData.WhiteColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+             margin: const EdgeInsets.only(top: 30,bottom: 30, left: 25, right: 25),
+
+
+            child: Container(
+              padding: EdgeInsets.all(25),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Edit Task',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1
+                        ?.copyWith(color: Colors.black,
+                        fontSize: 27
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+
+                  //add new
+                  Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          decoration: InputDecoration(
+                            // labelStyle: Theme.of(context).textTheme.bodyText1,
+                            labelText: 'Title',
+                          ),
+                          onChanged: (text) {
+                            editData.title = text;
+                          },
+                          controller: title,/////
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Please enter task title';
+                            }
+                            return null;
+                          },
+                        ),
+                        //title
+                        SizedBox(height: 25,),
+                        TextFormField(
+                          style: TextStyle(
+                            color: Colors.green,
+                          ),
+                          maxLines: 4,
+                          minLines: 4,
+                          decoration: InputDecoration(
+                            labelText: 'Description',
+                            // labelStyle: Theme.of(context).textTheme.bodyText1,
+                          ),
+                          onChanged: (text) {
+                            editData.description = text;
+                          },
+                          controller: description,
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Please enter task description';
+                            }
+                            return null;
+                          },
+                        ), //description
+                      ],
+                    ),
+                  ),
+                  Spacer(
+                    flex: 2,
+                  ),
+                  Text(
+                    'Select Time',style:
+                    TextStyle(
+                      fontSize: 18
+                    ),
+                  ), //select time
+                  Spacer(
+                    flex: 1,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      OpenDatePicker();
+                    },
+                    child: Text(
+                      '${selectedDate.day} - ${selectedDate.month} - ${selectedDate.year}',
+                      textAlign: TextAlign.center,
+                    ),
+                  ), //date
+                  Spacer(),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        showLoading(context, 'Loading...');
+
+                        updateTasksFromFirestore(editData).then((value) {
+                          hideLoadingDialog(context);
+
+                          showMessage(context, 'Edited Successfully', 'Ok', () {
+                            Navigator.popUntil(
+                              context,
+                                  (route) => route.isFirst,
+                            );
+                            //to close any sheet at the top of base screen
+                            // Navigator.pop(context);
+                          });
+                          // Navigator.pop(context);//close bottom sheet
+                        }).catchError((e) {
+                          hideLoadingDialog(context);
+                        });
+                      }
+                    },
+                    child: Text('Save Change',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(70, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-
-        Column(
-          children: [
-            const Spacer(
-              flex: 1,
-            ),
-
-            Expanded(
-              flex: 4,
-              child: Card(
-                color: MyThemeData.WhiteColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                 margin: const EdgeInsets.only(bottom: 25, left: 25, right: 25),
-
-
-                child: Container(
-                  padding: EdgeInsets.all(25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-
-                      //add new
-                      Form(
-                        key: formKey,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                // labelStyle: Theme.of(context).textTheme.bodyText1,
-                                labelText: 'Title',
-                              ),
-                              onChanged: (text) {
-                                editData.title = text;
-                              },
-                              controller: title,
-                              validator: (text) {
-                                if (text == null || text.isEmpty) {
-                                  return 'Please enter task title';
-                                }
-                                return null;
-                              },
-                            ),
-                            //title
-                            SizedBox(height: 25,),
-                            TextFormField(
-                              style: TextStyle(
-                                color: Colors.green,
-                              ),
-                              maxLines: 4,
-                              minLines: 4,
-                              decoration: InputDecoration(
-                                labelText: 'Description',
-                                // labelStyle: Theme.of(context).textTheme.bodyText1,
-                              ),
-                              onChanged: (text) {
-                                editData.description = text;
-                              },
-                              controller: description,
-                              validator: (text) {
-                                if (text == null || text.isEmpty) {
-                                  return 'Please enter task description';
-                                }
-                                return null;
-                              },
-                            ), //description
-                          ],
-                        ),
-                      ),
-                      Spacer(
-                        flex: 2,
-                      ),
-                      Text(
-                        'Select Time',style:
-                        TextStyle(
-                          fontSize: 18
-                        ),
-                      ), //select time
-                      Spacer(
-                        flex: 1,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          OpenDatePicker();
-                        },
-                        child: Text(
-                          '${selectedDate.day} - ${selectedDate.month} - ${selectedDate.year}',
-                          textAlign: TextAlign.center,
-                        ),
-                      ), //date
-                      // SizedBox(
-                      //   height: 15,
-                      // ),
-                      Spacer(
-                      ),
-                      ElevatedButton(
-                        
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            // local database /// mobile
-                            // remote database  // online
-                            // TaskModel tas = TaskModel(
-                            //     title: editData.title,
-                            //     description: editData.description,
-                            //     dateTime: DateUtils.dateOnly(selectedDate)
-                            //         .microsecondsSinceEpoch);
-                            //take datTime and return Date
-                            showLoading(context, 'Loading...');
-
-                            updateTasksFromFirestore(editData).then((value) {
-                              hideLoadingDialog(context);
-
-                              showMessage(context, 'Added Successfully', 'Ok', () {
-                                Navigator.popUntil(
-                                  context,
-                                      (route) => route.isFirst,
-                                );
-                                //to close any sheet at the top of base screen
-                                // Navigator.pop(context);
-                              });
-
-
-                              // Navigator.pop(context);//close bottom sheet
-                            }).catchError((e) {
-                              hideLoadingDialog(context);
-                            });
-                          }
-                        },
-                        child: Text('Save Change'),
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          padding: EdgeInsets.all(15),
-
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
       ],
+    ),
+    ]
     );
+
   }
 
   // return choosen date
