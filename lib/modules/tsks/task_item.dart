@@ -16,8 +16,6 @@ class TaskItem extends StatefulWidget {
 }
 
 class _TaskItemState extends State<TaskItem> {
-  bool click=true;
-
   late NavigatorState navigator;
 
   @override
@@ -28,6 +26,7 @@ class _TaskItemState extends State<TaskItem> {
 
   @override
   Widget build(BuildContext context) {
+    // bool done=widget.taskModel.isDone;
     var size = MediaQuery.of(context).size;
     return Padding(
       padding:  EdgeInsets.only(top: 10,bottom: 5,),
@@ -76,8 +75,9 @@ class _TaskItemState extends State<TaskItem> {
                autoClose: true,
                 spacing: 15,
                 onPressed:(context){
+                  widget.taskModel.isDone==false?
                   Navigator.pushNamed(context, EditTask.routeName,
-                  arguments: widget.taskModel);
+                  arguments: widget.taskModel):{};
                 },
                 backgroundColor: Color(0xFF21B7CA),
                 foregroundColor: Colors.white,
@@ -101,29 +101,44 @@ class _TaskItemState extends State<TaskItem> {
                   children: [
                     Text(
                       widget.taskModel.title,
-                      style: Theme.of(context)
+                      style: widget.taskModel.isDone==false ?
+                      Theme.of(context)
                           .textTheme
                           .headline2!
-                          .copyWith(fontSize: 19),
-                    ),
+                          .copyWith(fontSize: 19):
+                      Theme.of(context)
+                          .textTheme
+                          .headline2!
+                          .copyWith(color: Colors.green)
+
+                    ),//title
                     Text(
-                        widget.taskModel.description),
+                        widget.taskModel.description),//description
                   ],
-                ),
+                ),//title ,description
               ),
-              Container(
-                margin: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                child: Icon((click==false)? Icons.check
-                :Icons.account_balance_wallet_sharp,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),//Icon
+              InkWell(
+                onTap: (){
+                  widget.taskModel.isDone=!widget.taskModel.isDone;
+                  updateTasksFromFirestore(widget.taskModel);
+                  setState(() {});
+                },
+                child: widget.taskModel.isDone==false?
+                   Container(
+                  margin: EdgeInsets.all(8),
+                       decoration: BoxDecoration(
+                       color: primaryColor,
+                      borderRadius: BorderRadius.circular(12),
+                         ),
+                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                     child: Icon(Icons.check))//Icon
+                    :
+                      Text('Done!',
+                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  color: Colors.green,
+                 ),
+                 )//DONE!
+              ),
             ],
           ),
         ),
@@ -137,5 +152,4 @@ class _TaskItemState extends State<TaskItem> {
 
       });
   }
-
 }
